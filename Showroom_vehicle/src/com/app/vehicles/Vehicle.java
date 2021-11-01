@@ -7,7 +7,7 @@ import java.util.Date;
  * Vehicle's  state(attributes) --chasisNo : String , color : String ,
  * category:string, price : double , manufactureDate(Date)
  */
-public class Vehicle {// outer class
+public class Vehicle implements Comparable<Vehicle> {// outer class
 	private String chasisNo;
 	private Color color;
 	private double price;
@@ -52,6 +52,12 @@ public class Vehicle {// outer class
 		return false;// => incompatible types !!!!!
 	}
 
+	@Override
+	public int compareTo(Vehicle anotherVehicle) {
+		System.out.println("in compare to");
+		return chasisNo.compareTo(anotherVehicle.chasisNo);// < 0 OR 0 or > 0
+	}
+
 	// add a non static method to assign delivery address to the vehicle
 	public void assignDeliveryAddress(String city, String state, String country, String zipCode) {
 		this.address = new DeliveryAddress(city, state, country, zipCode);
@@ -65,15 +71,12 @@ public class Vehicle {// outer class
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
-	//getter for chasis no
+
+	// getter for chasis no
 
 	public String getChasisNo() {
 		return chasisNo;
 	}
-	
-	
-	
 
 	public Color getColor() {
 		return color;
@@ -90,9 +93,6 @@ public class Vehicle {// outer class
 	public Category getCategory() {
 		return category;
 	}
-
-
-
 
 	// non static nested class : inner class
 	public class DeliveryAddress {
