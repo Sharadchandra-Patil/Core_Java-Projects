@@ -19,7 +19,7 @@ public class CollectionUtils
 		
       //String customerName, String email, String password, double regiAmount, Date date, Plan plan) {
 				
-		list.add(new Customer("Sharad", "sharad.6030@gmail.com", "Sharad", 2500, validateDoB("4-9-1994"),validatePlan("gold")));
+		list.add(new Customer("Sharad", "sharad.6030@gmail.com", "Sharad", 25000, validateDoB("4-9-1994"),validatePlan("gold")));
 		
 		list.add(new Customer("kaustubh", "kstbh@gmail.com", "kaustubh", 35000, validateDoB("19-11-1988"), validatePlan("diamond")));
 		

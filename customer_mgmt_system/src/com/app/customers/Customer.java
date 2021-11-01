@@ -13,7 +13,7 @@ Adhar Card details : card number, location.
 Only after  successful customer registration , adhar card details can be linked to the customer.
 */
 
-public class Customer {
+public class Customer implements Comparable<Customer>{
 	// Customer :
 	// name(string),email(string),password(string),registrationAmount(double),dob(Date),plan(enum
 	// : SILVER ,GOLD,DIAMOND,PLATUNUM)
@@ -49,22 +49,33 @@ public class Customer {
 		this.email = email;
 	}
 
-	// adharlinking method ***************************
+	//compareTo method of string class  *****************************
 	
-	public void linkAdharNumber(String number, String location) throws CustomerHandlingException {
-		if(number.length()==12)
-			this.adhar = new AdharCard(number, location);
-		else throw new CustomerHandlingException("Your adhar number is not of 12 digit. Please check digits..");
+	public int compareTo(Customer temp) {
+		
+		//return this.getEmail().compareTo(temp.getEmail());   //asc
+		
+		return temp.getEmail().compareTo(this.getEmail());   //desc
 	}
 	
-	//get adhar location from outer class  *************************
+	
+	
+	// adharlinking method ***************************
+
+	public void linkAdharNumber(String number, String location) throws CustomerHandlingException {
+		if (number.length() == 12)
+			this.adhar = new AdharCard(number, location);
+		else
+			throw new CustomerHandlingException("Your adhar number is not of 12 digit. Please check digits..");
+	}
+
+	// get adhar location from outer class *************************
 	public String getAdharLocation() {
 		return this.adhar.getLocation();
 	}
-		
 
-	//getters and setters *************************
-	
+	// getters and setters *************************
+
 	public String getCustomerName() {
 		return customerName;
 	}
@@ -77,10 +88,21 @@ public class Customer {
 		return plan;
 	}
 
+	public AdharCard getAdhar() {
+		return adhar;
+	}
+
+	
+
 	public void setPlan(Plan plan) {
 		this.plan = plan;
 	}
-	
+
+	public double getRegiAmount() {
+		return regiAmount;
+	}
+
+
 	public String getPassword() {
 		return password;
 	}
@@ -89,6 +111,12 @@ public class Customer {
 		this.password = password;
 	}
 
+	
+	public String getEmail() {
+		return email;
+	}
+
+	
 
 	// equals method ***************************
 	@Override
@@ -102,9 +130,8 @@ public class Customer {
 	@Override
 	public String toString() {
 		String adh = adhar == null ? "Adhar is not linked yet " : adhar.toString();
-		return "Customers [customerName=" + customerName + ", email=" + email + ", password=" + password
-				+ ", regiAmount=" + regiAmount + ", date=" + sdf.format(date) + ", plan=" + plan + " "
-				+ adh + "]";
+		return "Customers [customerName=" + customerName + ", email=" + email + ", regiAmount=" + regiAmount + ", date="
+				+ sdf.format(date) + ", plan=" + plan + " " + adh + "]";
 	}
 
 //****************************************************************

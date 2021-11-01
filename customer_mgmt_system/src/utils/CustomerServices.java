@@ -14,10 +14,9 @@ import com.app.customers.Plan;
 import custom_exception.CustomerHandlingException;
 
 public class CustomerServices {
-	public static Scanner sc = new Scanner(System.in);
 
-	//Adding customer ******************************
-	
+	// Adding customer ******************************
+
 	public static void registerCustomer() throws CustomerHandlingException, ParseException {
 
 		double regAmt;
@@ -64,9 +63,8 @@ public class CustomerServices {
 
 	}
 
-	
-	//Customer login **************************************
-	
+	// Customer login **************************************
+
 	public static void customerLogin() throws CustomerHandlingException {
 		System.out.print(" Enter email and password for login :: \n  Email Id : ");
 		String email = sc.next();
@@ -103,91 +101,89 @@ public class CustomerServices {
 
 	}
 
-	
 	// finding customer using PK email **************************
-	
+
 	public static Customer findByEmail(String email) throws CustomerHandlingException {
 		Customer temp = new Customer(email);
-		for (Customer cust : customers) {
-			System.out.println(cust);
-			if (cust != null)
-				if (temp.equals(cust))
-					return cust;
-		}
-		throw new CustomerHandlingException("Customer with this email id does not exist!!!");
+		int index = customers.indexOf(temp);// indexof returns -1 if cust not found
+		if (index == -1)
+			throw new CustomerHandlingException("Customer with this email id does not exist!!!");
+
+		return customers.get(index);// returns record
 	}
-	
-	
-	//adhar linking  **********************************
-	
+
+	// adhar linking **********************************
+
 	public static void linkAdharToCustomerAccount() throws CustomerHandlingException {
 		System.out.print("Ask customer email id : \n  Email-Id :: ");
 		String email = sc.next();
 		Customer cust = findByEmail(email);
-		System.out.print(" Ask user adhar number and location : \n  Adhar Number :: ");
-		String number = sc.next();
-		System.out.print("  Location :: ");
-		String location = sc.next();
-		cust.linkAdharNumber(number, location);
-		System.out.println(" Adhaar linked successfully...");
+		if (cust.getAdhar() == null) {
+			System.out.print(" Ask user adhar number and location : \n  Adhar Number :: ");
+			String number = sc.next();
+			System.out.print("  Location :: ");
+			String location = sc.next();
+			cust.linkAdharNumber(number, location);
+			System.out.println(" Adhaar linked successfully...");
+		}else
+			throw new CustomerHandlingException("Adhar is already linked...");
 	}
-	
-	
-	//un-subscribe customer ***********************************
-	
+
+	// un-subscribe customer ***********************************
+
 	public static void unSubscribeCustomer() throws CustomerHandlingException {
 		System.out.print(" Ask user email: \n  E-mail : ");
 		String email = sc.next();
 		Customer cust = findByEmail(email);
 		customers.remove(cust);
-		System.out.println(" Customer named "+ cust.getCustomerName() +" removed successfully from list..");
+		System.out.println(" Customer named " + cust.getCustomerName() + " removed successfully from list..");
 	}
-	
 
-	//	displayAllCustomers ******************************
+	// displayAllCustomers ******************************
 
-	public static void 	displayAllCustomers() {
-		for(Customer cust : customers) {
-			System.out.println(cust);
+	public static void displayAllCustomers() {
+		System.out.println(" All Customer information : ");
+		for (Customer cust : customers) {
+			System.out.println("  " + cust);
 		}
 	}
-	
-	//displayAllCustomerNamesWithSpecificPlan *************************
-	
-	public static void displayAllCustomerNamesWithSpecificPlan() throws CustomerHandlingException{
+
+	// displayAllCustomerNamesWithSpecificPlan *************************
+
+	public static void displayAllCustomerNamesWithSpecificPlan() throws CustomerHandlingException {
 		System.out.print("Plese enter plan : \n  Plan :: ");
 		String p = sc.next();
 		Plan plan = validatePlan(p);
 		System.out.println("\n Customer names are :");
-		for(Customer cust : customers) {
-			if(cust.getPlan().name().equals(plan.name()))
-				System.out.println("  "+cust.getCustomerName());
+		for (Customer cust : customers) {
+			if (cust.getPlan().name().equals(plan.name()))
+				System.out.println("  " + cust.getCustomerName());
 		}
 	}
-	
-	//displayAllCustomerBornAfterGivenDate() ****************************
-	
+
+	// displayAllCustomerBornAfterGivenDate() ****************************
+
 	public static void displayAllCustomersBornAfterGivenDate() throws ParseException, CustomerHandlingException {
-		
+
 		System.out.print("Enter date(dd-MM-yyyy) format. \n Date :  ");
 		String dt_str = sc.next();
 		Date date = validateDoB(dt_str);
 		System.out.println("\n List of customers is :");
-		for(Customer cust : customers)
-			if(cust.getDate().after(date))
+		for (Customer cust : customers)
+			if (cust.getDate().after(date))
 				System.out.println("  " + cust);
-				
+
 	}
-	
-	//displayAllCustomersAtGivenLocation() ********************************
-	
+
+	// displayAllCustomersAtGivenLocation() ********************************
+
 	public static void displayAllCustomersAtGivenLocation() {
 		System.out.print("Enter location \n Location : ");
-		String location =  sc.next();
-		System.out.println("\n List of customers at location "+ location + " is :");
-		for(Customer cust : customers)
-			if(location.equals(cust.getAdharLocation()))
-				System.out.println("  "+ cust);
+		String location = sc.next();
+		System.out.println("\n List of customers at location " + location + " is :");
+		for (Customer cust : customers)
+			if (location.equals(cust.getAdharLocation()))
+				System.out.println("  " + cust);
 	}
 
 }
