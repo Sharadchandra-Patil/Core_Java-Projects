@@ -3,7 +3,7 @@ package com.app.customers;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import custom_exception.CustomerHandlingException;
+import com.custom_exception.CustomerHandlingException;
 
 /*
  * 4.1 Customer : name(string),email(string),password(string),registrationAmount(double),dob(Date),plan(enum : SILVER ,GOLD,DIAMOND,PLATUNUM)
