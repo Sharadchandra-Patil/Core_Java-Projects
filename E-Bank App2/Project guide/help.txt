@@ -1,0 +1,2 @@
+### Tester package name ==> EBank
+    Tester class name   ==> Ebank_Tester
